@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<title>نموذج اختبار متقدم</title>
+<link href="https://fonts.googleapis.com/css2?family=Sakkal+Majalla&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      font-family: 'Sakkal Majalla', serif;
+      background: #f9f9fb;
+      color: #333;
+      margin: 30px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    h2 {
+      background: linear-gradient(45deg, #006d77, #83c5be);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #999;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    tfoot td {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+    #logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+    .hidden { display: none; }
+  
+    @media print {
+      body {
+        margin: 10mm;
+        font-size: 14px;
+      }
+      .container {
+        box-shadow: none;
+        padding: 10px;
+      }
+      input, select {
+        font-size: 12px;
+        padding: 4px;
+      }
+      table, th, td {
+        font-size: 12px;
+        padding: 4px;
+      }
+      button {
+        display: none !important;
+      }
+    }
+    
+    table {
+      border: 1px solid #ccc;
+      background: #fcfcfc;
+    }
+    table th {
+      background: #def;
+      color: #000;
+    }
+    h2 {
+      background: #006d77;
+      color: white;
+      padding: 8px 12px;
+      font-size: 17px;
+      border-radius: 6px;
+    }
+    table td, table th {
+      font-size: 13px !important;
+      padding: 6px !important;
+    }
+    
+        #hifz-section th, #hifz-section td {
+            font-size: 13px !important;
+            padding: 5px !important;
+        }
+        #hifz-section input, #hifz-section select {
+            width: 95% !important;
+            font-size: 13px !important;
+        }
+        
+    table th, table td {
+        font-weight: bold;
+    }
+    input, select {
+        font-weight: bold !important;
+    }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head>
+<body>
+<div class="container" id="form">
+<h2>البيانات الشخصية</h2>
+<div class="section row">
+<input placeholder="اسم المتقدم"/>
+<input placeholder="الجنسية"/>
+<input placeholder="تاريخ الميلاد"/>
+<input placeholder="عنوان السكن"/>
+<input placeholder="الهاتف"/>
+<input placeholder="المؤهل العلمي"/>
+<input placeholder="الأجزاء المحفوظة"/>
+<input placeholder="الأجزاء المختبر بها"/>
+<label><input id="hafidhCheckbox" type="checkbox"/> شهادة حافظ من المؤسسة</label>
+<input placeholder="أقرب مسجد"/><input placeholder="المدينة"/><input placeholder="البريد الإلكتروني"/><input placeholder="وسيلة المواصلات"/><input placeholder="الحالة الاجتماعية"/><input placeholder="اسم الكفيل أو الجهة"/><input placeholder="رقم هاتف الكفيل"/><input placeholder="الإقامة على أي إمارة"/></div>
+<h2>أسئلة الحفظ <span id="hafidhNote" style="color: white; font-size: 18px; display: none;">(لديه شهادة حافظ من مؤسسة القرآن والسنة)</span></h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;"><div><div style="margin: 10px 0; padding: 8px; font-size: 13px; background: #f4f8fa; border: 1px dashed #ccc; border-radius: 6px; color: #333;">رموز التصحيح: / = تنبيه نصف درجة، * = فتح درجة واحدة، 0 = خطأ تجويدي نصف درجة</div><table id="hifz-section" style="min-width: 100%; table-layout: fixed;">
+<thead>
+<tr>
+<th>السؤال</th>
+<th>السورة</th>
+<th>من آية</th>
+<th>إلى آية</th>
+<th>الملاحظات</th>
+<th>علامات الأخطاء<br/></th>
+<th>الدرجة</th>
+</tr>
+</thead>
+<tbody><tr><td>السؤال 1</td><td><select><option>اختر سورة</option><option>الفاتحة</option><option>البقرة</option><option>آل عمران</option><option>النساء</option><option>المائدة</option><option>الأنعام</option><option>الأعراف</option><option>الأنفال</option><option>التوبة</option><option>يونس</option><option>هود</option><option>يوسف</option><option>الرعد</option><option>إبراهيم</option><option>الحجر</option><option>النحل</option><option>الإسراء</option><option>الكهف</option><option>مريم</option><option>طه</option><option>الأنبياء</option><option>الحج</option><option>المؤمنون</option><option>النور</option><option>الفرقان</option><option>الشعراء</option><option>النمل</option><option>القصص</option><option>العنكبوت</option><option>الروم</option><option>لقمان</option><option>السجدة</option><option>الأحزاب</option><option>سبأ</option><option>فاطر</option><option>يس</option><option>الصافات</option><option>ص</option><option>الزمر</option><option>غافر</option><option>فصلت</option><option>الشورى</option><option>الزخرف</option><option>الدخان</option><option>الجاثية</option><option>الأحقاف</option><option>محمد</option><option>الفتح</option><option>الحجرات</option><option>ق</option><option>الذاريات</option><option>الطور</option><option>النجم</option><option>القمر</option><option>الرحمن</option><option>الواقعة</option><option>الحديد</option><option>المجادلة</option><option>الحشر</option><option>الممتحنة</option><option>الصف</option><option>الجمعة</option><option>المنافقون</option><option>التغابن</option><option>الطلاق</option><option>التحريم</option><option>الملك</option><option>القلم</option><option>الحاقة</option><option>المعارج</option><option>نوح</option><option>الجن</option><option>المزمل</option><option>المدثر</option><option>القيامة</option><option>الإنسان</option><option>المرسلات</option><option>النبأ</option><option>النازعات</option><option>عبس</option><option>التكوير</option><option>الانفطار</option><option>المطففين</option><option>الانشقاق</option><option>البروج</option><option>الطارق</option><option>الأعلى</option><option>الغاشية</option><option>الفجر</option><option>البلد</option><option>الشمس</option><option>الليل</option><option>الضحى</option><option>الشرح</option><option>التين</option><option>العلق</option><option>القدر</option><option>البينة</option><option>الزلزلة</option><option>العاديات</option><option>القارعة</option><option>التكاثر</option><option>العصر</option><option>الهمزة</option><option>الفيل</option><option>قريش</option><option>الماعون</option><option>الكوثر</option><option>الكافرون</option><option>النصر</option><option>المسد</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option></select></td><td><input style="width: 60px;"/></td><td><input style="width: 60px;"/></td><td><input/></td><td><input class="mistakes" oninput="calcMistakes(this)" style="width: 80px;"/></td><td><input class="score حفظ" oninput="calcTotal()"/></td></tr><tr><td>السؤال 2</td><td><select><option>اختر سورة</option><option>الفاتحة</option><option>البقرة</option><option>آل عمران</option><option>النساء</option><option>المائدة</option><option>الأنعام</option><option>الأعراف</option><option>الأنفال</option><option>التوبة</option><option>يونس</option><option>هود</option><option>يوسف</option><option>الرعد</option><option>إبراهيم</option><option>الحجر</option><option>النحل</option><option>الإسراء</option><option>الكهف</option><option>مريم</option><option>طه</option><option>الأنبياء</option><option>الحج</option><option>المؤمنون</option><option>النور</option><option>الفرقان</option><option>الشعراء</option><option>النمل</option><option>القصص</option><option>العنكبوت</option><option>الروم</option><option>لقمان</option><option>السجدة</option><option>الأحزاب</option><option>سبأ</option><option>فاطر</option><option>يس</option><option>الصافات</option><option>ص</option><option>الزمر</option><option>غافر</option><option>فصلت</option><option>الشورى</option><option>الزخرف</option><option>الدخان</option><option>الجاثية</option><option>الأحقاف</option><option>محمد</option><option>الفتح</option><option>الحجرات</option><option>ق</option><option>الذاريات</option><option>الطور</option><option>النجم</option><option>القمر</option><option>الرحمن</option><option>الواقعة</option><option>الحديد</option><option>المجادلة</option><option>الحشر</option><option>الممتحنة</option><option>الصف</option><option>الجمعة</option><option>المنافقون</option><option>التغابن</option><option>الطلاق</option><option>التحريم</option><option>الملك</option><option>القلم</option><option>الحاقة</option><option>المعارج</option><option>نوح</option><option>الجن</option><option>المزمل</option><option>المدثر</option><option>القيامة</option><option>الإنسان</option><option>المرسلات</option><option>النبأ</option><option>النازعات</option><option>عبس</option><option>التكوير</option><option>الانفطار</option><option>المطففين</option><option>الانشقاق</option><option>البروج</option><option>الطارق</option><option>الأعلى</option><option>الغاشية</option><option>الفجر</option><option>البلد</option><option>الشمس</option><option>الليل</option><option>الضحى</option><option>الشرح</option><option>التين</option><option>العلق</option><option>القدر</option><option>البينة</option><option>الزلزلة</option><option>العاديات</option><option>القارعة</option><option>التكاثر</option><option>العصر</option><option>الهمزة</option><option>الفيل</option><option>قريش</option><option>الماعون</option><option>الكوثر</option><option>الكافرون</option><option>النصر</option><option>المسد</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option></select></td><td><input style="width: 60px;"/></td><td><input style="width: 60px;"/></td><td><input/></td><td><input class="mistakes" oninput="calcMistakes(this)" style="width: 80px;"/></td><td><input class="score حفظ" oninput="calcTotal()"/></td></tr><tr><td>السؤال 3</td><td><select><option>اختر سورة</option><option>الفاتحة</option><option>البقرة</option><option>آل عمران</option><option>النساء</option><option>المائدة</option><option>الأنعام</option><option>الأعراف</option><option>الأنفال</option><option>التوبة</option><option>يونس</option><option>هود</option><option>يوسف</option><option>الرعد</option><option>إبراهيم</option><option>الحجر</option><option>النحل</option><option>الإسراء</option><option>الكهف</option><option>مريم</option><option>طه</option><option>الأنبياء</option><option>الحج</option><option>المؤمنون</option><option>النور</option><option>الفرقان</option><option>الشعراء</option><option>النمل</option><option>القصص</option><option>العنكبوت</option><option>الروم</option><option>لقمان</option><option>السجدة</option><option>الأحزاب</option><option>سبأ</option><option>فاطر</option><option>يس</option><option>الصافات</option><option>ص</option><option>الزمر</option><option>غافر</option><option>فصلت</option><option>الشورى</option><option>الزخرف</option><option>الدخان</option><option>الجاثية</option><option>الأحقاف</option><option>محمد</option><option>الفتح</option><option>الحجرات</option><option>ق</option><option>الذاريات</option><option>الطور</option><option>النجم</option><option>القمر</option><option>الرحمن</option><option>الواقعة</option><option>الحديد</option><option>المجادلة</option><option>الحشر</option><option>الممتحنة</option><option>الصف</option><option>الجمعة</option><option>المنافقون</option><option>التغابن</option><option>الطلاق</option><option>التحريم</option><option>الملك</option><option>القلم</option><option>الحاقة</option><option>المعارج</option><option>نوح</option><option>الجن</option><option>المزمل</option><option>المدثر</option><option>القيامة</option><option>الإنسان</option><option>المرسلات</option><option>النبأ</option><option>النازعات</option><option>عبس</option><option>التكوير</option><option>الانفطار</option><option>المطففين</option><option>الانشقاق</option><option>البروج</option><option>الطارق</option><option>الأعلى</option><option>الغاشية</option><option>الفجر</option><option>البلد</option><option>الشمس</option><option>الليل</option><option>الضحى</option><option>الشرح</option><option>التين</option><option>العلق</option><option>القدر</option><option>البينة</option><option>الزلزلة</option><option>العاديات</option><option>القارعة</option><option>التكاثر</option><option>العصر</option><option>الهمزة</option><option>الفيل</option><option>قريش</option><option>الماعون</option><option>الكوثر</option><option>الكافرون</option><option>النصر</option><option>المسد</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option></select></td><td><input style="width: 60px;"/></td><td><input style="width: 60px;"/></td><td><input/></td><td><input class="mistakes" oninput="calcMistakes(this)" style="width: 80px;"/></td><td><input class="score حفظ" oninput="calcTotal()"/></td></tr><tr><td>السؤال 4</td><td><select><option>اختر سورة</option><option>الفاتحة</option><option>البقرة</option><option>آل عمران</option><option>النساء</option><option>المائدة</option><option>الأنعام</option><option>الأعراف</option><option>الأنفال</option><option>التوبة</option><option>يونس</option><option>هود</option><option>يوسف</option><option>الرعد</option><option>إبراهيم</option><option>الحجر</option><option>النحل</option><option>الإسراء</option><option>الكهف</option><option>مريم</option><option>طه</option><option>الأنبياء</option><option>الحج</option><option>المؤمنون</option><option>النور</option><option>الفرقان</option><option>الشعراء</option><option>النمل</option><option>القصص</option><option>العنكبوت</option><option>الروم</option><option>لقمان</option><option>السجدة</option><option>الأحزاب</option><option>سبأ</option><option>فاطر</option><option>يس</option><option>الصافات</option><option>ص</option><option>الزمر</option><option>غافر</option><option>فصلت</option><option>الشورى</option><option>الزخرف</option><option>الدخان</option><option>الجاثية</option><option>الأحقاف</option><option>محمد</option><option>الفتح</option><option>الحجرات</option><option>ق</option><option>الذاريات</option><option>الطور</option><option>النجم</option><option>القمر</option><option>الرحمن</option><option>الواقعة</option><option>الحديد</option><option>المجادلة</option><option>الحشر</option><option>الممتحنة</option><option>الصف</option><option>الجمعة</option><option>المنافقون</option><option>التغابن</option><option>الطلاق</option><option>التحريم</option><option>الملك</option><option>القلم</option><option>الحاقة</option><option>المعارج</option><option>نوح</option><option>الجن</option><option>المزمل</option><option>المدثر</option><option>القيامة</option><option>الإنسان</option><option>المرسلات</option><option>النبأ</option><option>النازعات</option><option>عبس</option><option>التكوير</option><option>الانفطار</option><option>المطففين</option><option>الانشقاق</option><option>البروج</option><option>الطارق</option><option>الأعلى</option><option>الغاشية</option><option>الفجر</option><option>البلد</option><option>الشمس</option><option>الليل</option><option>الضحى</option><option>الشرح</option><option>التين</option><option>العلق</option><option>القدر</option><option>البينة</option><option>الزلزلة</option><option>العاديات</option><option>القارعة</option><option>التكاثر</option><option>العصر</option><option>الهمزة</option><option>الفيل</option><option>قريش</option><option>الماعون</option><option>الكوثر</option><option>الكافرون</option><option>النصر</option><option>المسد</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option></select></td><td><input style="width: 60px;"/></td><td><input style="width: 60px;"/></td><td><input/></td><td><input class="mistakes" oninput="calcMistakes(this)" style="width: 80px;"/></td><td><input class="score حفظ" oninput="calcTotal()"/></td></tr><tr><td>السؤال 5</td><td><select><option>اختر سورة</option><option>الفاتحة</option><option>البقرة</option><option>آل عمران</option><option>النساء</option><option>المائدة</option><option>الأنعام</option><option>الأعراف</option><option>الأنفال</option><option>التوبة</option><option>يونس</option><option>هود</option><option>يوسف</option><option>الرعد</option><option>إبراهيم</option><option>الحجر</option><option>النحل</option><option>الإسراء</option><option>الكهف</option><option>مريم</option><option>طه</option><option>الأنبياء</option><option>الحج</option><option>المؤمنون</option><option>النور</option><option>الفرقان</option><option>الشعراء</option><option>النمل</option><option>القصص</option><option>العنكبوت</option><option>الروم</option><option>لقمان</option><option>السجدة</option><option>الأحزاب</option><option>سبأ</option><option>فاطر</option><option>يس</option><option>الصافات</option><option>ص</option><option>الزمر</option><option>غافر</option><option>فصلت</option><option>الشورى</option><option>الزخرف</option><option>الدخان</option><option>الجاثية</option><option>الأحقاف</option><option>محمد</option><option>الفتح</option><option>الحجرات</option><option>ق</option><option>الذاريات</option><option>الطور</option><option>النجم</option><option>القمر</option><option>الرحمن</option><option>الواقعة</option><option>الحديد</option><option>المجادلة</option><option>الحشر</option><option>الممتحنة</option><option>الصف</option><option>الجمعة</option><option>المنافقون</option><option>التغابن</option><option>الطلاق</option><option>التحريم</option><option>الملك</option><option>القلم</option><option>الحاقة</option><option>المعارج</option><option>نوح</option><option>الجن</option><option>المزمل</option><option>المدثر</option><option>القيامة</option><option>الإنسان</option><option>المرسلات</option><option>النبأ</option><option>النازعات</option><option>عبس</option><option>التكوير</option><option>الانفطار</option><option>المطففين</option><option>الانشقاق</option><option>البروج</option><option>الطارق</option><option>الأعلى</option><option>الغاشية</option><option>الفجر</option><option>البلد</option><option>الشمس</option><option>الليل</option><option>الضحى</option><option>الشرح</option><option>التين</option><option>العلق</option><option>القدر</option><option>البينة</option><option>الزلزلة</option><option>العاديات</option><option>القارعة</option><option>التكاثر</option><option>العصر</option><option>الهمزة</option><option>الفيل</option><option>قريش</option><option>الماعون</option><option>الكوثر</option><option>الكافرون</option><option>النصر</option><option>المسد</option><option>الإخلاص</option><option>الفلق</option><option>الناس</option></select></td><td><input style="width: 60px;"/></td><td><input style="width: 60px;"/></td><td><input/></td><td><input class="mistakes" oninput="calcMistakes(this)" style="width: 80px;"/></td><td><input class="score حفظ" oninput="calcTotal()"/></td></tr></tbody>
+</table></div><div><div id="ahkam-section"><h2>أحكام التجويد العملي (من 20)</h2><table>
+<thead>
+<tr><th>البند</th><th>الدرجة</th></tr>
+</thead>
+<tbody><tr><td class="ahkam-surah">سورة 1</td><td class="ahkam-count"><input class="score أحكام" readonly="readonly" value="0"/></td></tr><tr><td class="ahkam-surah">سورة 2</td><td class="ahkam-count"><input class="score أحكام" readonly="readonly" value="0"/></td></tr><tr><td class="ahkam-surah">سورة 3</td><td class="ahkam-count"><input class="score أحكام" readonly="readonly" value="0"/></td></tr><tr><td class="ahkam-surah">سورة 4</td><td class="ahkam-count"><input class="score أحكام" readonly="readonly" value="0"/></td></tr><tr><td class="ahkam-surah">سورة 5</td><td class="ahkam-count"><input class="score أحكام" readonly="readonly" value="0"/></td></tr></tbody>
+</table></div></div><div><h2>أسئلة التجويد النظرية</h2><table>
+<thead>
+<tr><th>السؤال</th><th>الدرجة (من 5)</th></tr>
+</thead>
+<tbody>
+<tr><td><input placeholder="السؤال 1"/></td><td><input class="score تجويد" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 2"/></td><td><input class="score تجويد" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 3"/></td><td><input class="score تجويد" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 4"/></td><td><input class="score تجويد" oninput="calcTotal()"/></td></tr>
+</tbody>
+</table></div><div><h2>مهارات وأساسيات التعليم (من 10)</h2><table>
+<thead>
+<tr><th>السؤال</th><th>الدرجة (من 2.5)</th></tr>
+</thead>
+<tbody>
+<tr><td><input placeholder="السؤال 1"/></td><td><input class="score تعليم" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 2"/></td><td><input class="score تعليم" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 3"/></td><td><input class="score تعليم" oninput="calcTotal()"/></td></tr>
+<tr><td><input placeholder="السؤال 4"/></td><td><input class="score تعليم" oninput="calcTotal()"/></td></tr>
+</tbody>
+</table></div></div><div style="margin: 25px 0; font-weight: bold;"><label style="display:block; font-size: 16px; margin-bottom: 10px;">تقرير اللجنة - يصلح للتدريس:</label><label style="margin-left: 25px; font-size: 14px;"><input style="margin-left: 6px;" type="checkbox"/>لا يصلح للتدريس</label><label style="margin-left: 25px; font-size: 14px;"><input style="margin-left: 6px;" type="checkbox"/>إعادة الاختبار</label></div><h2>المجموع</h2>
+<table>
+<tr><td>مجموع درجات الحفظ</td><td id="totalHifz">0</td></tr>
+<tr><td>مجموع درجات التجويد النظري</td><td id="totalTajweed">0</td></tr>
+<tr><td>مجموع درجات المهارات وأساسيات التعليم</td><td id="totalTeaching">0</td></tr>
+<tr><td>مجموع درجات أحكام التجويد العملي</td><td id="totalAhkam">0</td></tr>
+<tr><td><strong>المجموع الكلي</strong></td><td id="grandTotal">0</td></tr>
+</table>
+<h2>اعتمادات اللجنة</h2>
+<div class="section row">
+<input placeholder="عضو لجنة الاختبار"/>
+<label><input class="approval" type="checkbox"/> اعتماد عضو اللجنة</label>
+<input placeholder="رئيس لجنة الاختبار"/>
+<label><input class="approval" type="checkbox"/> اعتماد الرئيس</label>
+<input placeholder="العضو الإداري"/>
+<label><input class="approval" type="checkbox"/> اعتماد العضو الإداري</label>
+</div>
+<button onclick="validateAndDownload()" style="margin: 20px auto; display: block; padding: 10px 20px; font-size: 18px; background: #006d77; color: white; border: none; border-radius: 8px; cursor: pointer;">طباعة النموذج PDF</button>
+</div>
+<div id="quranSidePanel" style="display:none; position:fixed; top:0; right:0; width:350px; height:100%; background:#f9f9f9; border-left:3px solid #006d77; padding:20px; z-index:9999; overflow-y:auto; box-shadow: -5px 0 10px rgba(0,0,0,0.2); font-family: 'Sakkal Majalla'; transition: all 0.3s ease;">
+<div style="text-align:left;"><button onclick="document.getElementById('quranSidePanel').style.display='none'" style="padding:5px 10px;">إغلاق</button></div>
+<h3 id="sideSurahTitle" style="margin-top:10px; color:#006d77;"></h3>
+<div id="sideSurahText" style="font-size:22px; line-height:2; color:#222;"></div>
+</div>
+<script>
+function calcTotal() {
+  let sumHifz = 0, sumTajweed = 0, sumTeaching = 0, sumAhkam = 0;
+  document.querySelectorAll('.score.حفظ').forEach(e => sumHifz += parseFloat(e.value) || 0);
+  document.querySelectorAll('.score.تجويد').forEach(e => sumTajweed += parseFloat(e.value) || 0);
+  document.querySelectorAll('.score.تعليم').forEach(e => sumTeaching += parseFloat(e.value) || 0);
+  document.querySelectorAll('.score.أحكام').forEach(e => sumAhkam += parseFloat(e.value) || 0);
+  document.getElementById('totalHifz').innerText = sumHifz.toFixed(2);
+  document.getElementById('totalTajweed').innerText = sumTajweed.toFixed(2);
+  document.getElementById('totalTeaching').innerText = sumTeaching.toFixed(2);
+  document.getElementById('totalAhkam').innerText = sumAhkam.toFixed(2);
+  document.getElementById('grandTotal').innerText = (sumHifz + sumTajweed + sumTeaching + sumAhkam).toFixed(2);
+}
+
+// ربطها بأي تغيير في المدخلات
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("input.score").forEach(input => {
+    input.addEventListener("input", calcTotal);
+  });
+});
+</script><script>
+function calcMistakes(input) {
+  const value = input.value || "";
+  let deduction = 0;
+
+  for (let char of value) {
+    if (char === '*') deduction += 1;
+    else if (char === '/') deduction += 0.5;
+    else if (char === '0') deduction += 0.5; // 0 is handled separately for Ahkam
+  }
+
+  const scoreInput = input.parentElement.nextElementSibling.querySelector('input.score.حفظ');
+  if (scoreInput) {
+    scoreInput.value = Math.max(0, 10 - deduction).toFixed(2);
+    calcTotal();
+  }
+}
+</script><script>
+document.addEventListener('DOMContentLoaded', () => {
+  const checkbox = document.getElementById("hafidhCheckbox");
+  const hifzSection = document.getElementById("hifz-section");
+  const ahkamSection = document.getElementById("ahkam-section");
+  const memorized = document.querySelector("input[placeholder='الأجزاء المحفوظة']");
+  const tested = document.querySelector("input[placeholder='الأجزاء المختبر بها']");
+  const hifzInputs = document.querySelectorAll('.score.حفظ');
+  const ahkamInputs = document.querySelectorAll('.score.أحكام');
+  const hafidhNote = document.getElementById("hafidhNote");
+
+  checkbox.addEventListener('change', () => {
+    const isChecked = checkbox.checked;
+
+    if (hifzSection) hifzSection.style.display = isChecked ? "none" : "";
+    if (ahkamSection) ahkamSection.style.display = isChecked ? "none" : "";
+    if (memorized) memorized.disabled = isChecked;
+    if (tested) tested.disabled = isChecked;
+    if (hafidhNote) hafidhNote.style.display = isChecked ? "inline" : "none";
+
+    hifzInputs.forEach(e => {
+      e.value = isChecked ? "10" : "";
+      e.disabled = isChecked;
+    });
+
+    ahkamInputs.forEach(e => {
+      e.value = isChecked ? "4" : "";
+      e.disabled = isChecked;
+    });
+
+    calcTotal();
+  });
+});
+</script><script>
+function validateAndDownload() {
+  const approvals = document.querySelectorAll(".approval");
+  const allChecked = Array.from(approvals).every(cb => cb.checked);
+  if (!allChecked) {
+    alert("يرجى اعتماد جميع أعضاء اللجنة قبل الطباعة.");
+    return;
+  }
+  generatePDF();
+}
+
+function generatePDF() {
+  const element = document.getElementById("form");
+  html2canvas(element).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+    // Convert PDF to blob and open in new tab
+    const blob = pdf.output('blob');
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+  });
+}
+</script><script>
+function calcMistakes(input) {
+  const value = input.value || "";
+  let deduction = 0;
+  for (let char of value) {
+    if (char === '*') deduction += 1;
+    else if (char === '/') deduction += 0.5;
+  }
+
+  const scoreInput = input.parentElement.nextElementSibling.querySelector('input.score.حفظ');
+  if (scoreInput) {
+    scoreInput.value = Math.max(0, 10 - deduction).toFixed(2);
+    calcTotal();
+  }
+}
+
+function updateAhkamTable() {
+  const hifzRows = document.querySelectorAll('#hifz-section tbody tr');
+  const ahkamInputs = document.querySelectorAll('.score.أحكام');
+  const ahkamSurahs = document.querySelectorAll('.ahkam-surah');
+  const ahkamCounts = document.querySelectorAll('.ahkam-count input');
+
+  hifzRows.forEach((row, index) => {
+    const select = row.querySelector('select');
+    const mistakesInput = row.querySelector('input.mistakes');
+    const ahkamInput = ahkamInputs[index];
+    const ahkamSurah = ahkamSurahs[index];
+    const ahkamCount = ahkamCounts[index];
+
+    if (mistakesInput) calcMistakes(mistakesInput);
+
+    if (select && ahkamInput && ahkamSurah && ahkamCount) {
+      const surahName = select.value || "غير محددة";
+      const mistakes = mistakesInput.value || "";
+      const zeroCount = [...mistakes].filter(c => c === '0').length;
+
+      ahkamSurah.innerText = "سورة " + (surahName || "غير محددة");
+      ahkamCount.value = zeroCount;
+      ahkamInput.value = Math.max(0, 4 - (zeroCount * 0.5)).toFixed(2); // 4 per question
+    }
+  });
+
+  calcTotal();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("select, .mistakes").forEach(input => {
+    input.addEventListener("change", updateAhkamTable);
+    input.addEventListener("input", updateAhkamTable);
+  });
+});
+</script></body>
+</html>
